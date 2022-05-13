@@ -1,0 +1,77 @@
+C51 COMPILER V9.55   TEST                                                                  04/05/2022 21:24:16 PAGE 1   
+
+
+C51 COMPILER V9.55, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\Objects\test.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE test.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\test
+                    -.lst) TABS(2) OBJECT(.\Objects\test.obj)
+
+line level    source
+
+   1          #include "test.h"
+   2          
+   3          u8 code wei[]={0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80}; 
+   4          u8 code dua[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0x00};
+   5          u8 ds[8];
+   6          void Delay100us()   //@11.0592MHz
+   7          {
+   8   1        unsigned char i, j;
+   9   1      
+  10   1        _nop_();
+  11   1        _nop_();
+  12   1        i = 2;
+  13   1        j = 15;
+  14   1        do
+  15   1        {
+  16   2          while (--j);
+  17   2        } while (--i);
+  18   1      }
+  19          
+  20          
+  21          void Fuck_Init(bit i,bit j)
+  22          {
+  23   1        buzz = i;relay = j;
+  24   1        P2 = Y5;
+  25   1        P2 = Yc;  
+  26   1      }
+  27          
+  28          void Ds_Init(u8 a)
+  29          {
+  30   1        u8 i;
+  31   1        
+  32   1        P0 = wei[i];
+  33   1        P2 = Y6;
+  34   1        P2 = Yc;
+  35   1        
+  36   1        P0 = ds[i];
+  37   1        P2 = Y7;
+  38   1        P2 = Yc;
+  39   1        i++;if(i>=8)i = 0;
+  40   1        Delay100us();
+  41   1        
+  42   1        ds[0] = ~dua[a/100];
+  43   1        ds[1] = ~dua[a/10%10];
+  44   1        ds[2] = ~dua[a%10];
+  45   1        ds[3] = ~dua[10];
+  46   1        ds[4] = ~dua[10];
+  47   1        ds[5] = ~dua[10];
+  48   1        ds[6] = ~dua[10];
+  49   1        ds[7] = ~dua[10];
+  50   1      }
+  51            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.55   TEST                                                                  04/05/2022 21:24:16 PAGE 2   
+
+   CODE SIZE        =    147    ----
+   CONSTANT SIZE    =     19    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

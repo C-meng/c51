@@ -1,0 +1,86 @@
+C51 COMPILER V9.57.0.0   MAIN                                                              03/13/2022 16:43:59 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "test.h"
+   2          #include "onewire.h"
+   3          
+   4          bit ds1,temp;
+   5          
+   6          void Timer0Init(void);
+   7          void main(void)
+   8          {
+   9   1        u8 temper_v;
+  10   1        Fuck_Init(0,0);//关闭蜂鸣器继电器
+  11   1        Timer0Init();
+  12   1        while(1)
+  13   1        {
+  14   2          if(ds1)
+  15   2          {
+  16   3            ds1 = 0;
+  17   3            Ds_Init(temper_v);
+  18   3          }
+  19   2          if(temp)
+  20   2          {
+  21   3            EA = 0;
+  22   3            temp = 0;
+  23   3            temper_v = temper_change();
+  24   3            EA = 1;
+  25   3          }
+  26   2          
+  27   2          
+  28   2        }
+  29   1      }
+  30          
+  31          void Timer0Init(void)   //1毫秒@11.0592MHz
+  32          {
+  33   1        AUXR |= 0x80;   //定时器时钟1T模式
+  34   1        TMOD &= 0xF0;   //设置定时器模式
+  35   1        TL0 = 0xCD;   //设置定时初值
+  36   1        TH0 = 0xD4;   //设置定时初值
+  37   1        TF0 = 0;    //清除TF0标志
+  38   1        TR0 = 1;    //定时器0开始计时
+  39   1        ET0 = 1;
+  40   1        EA = 1;
+  41   1      }
+  42          
+  43          void Timer0() interrupt 1
+  44          {
+  45   1        u16 ds_c,temp_c;
+  46   1        TL0 = 0xCD;   //设置定时初值
+  47   1        TH0 = 0xD4;   //设置定时初值
+  48   1        
+  49   1        if(temp_c++ >= 100)
+  50   1        {
+  51   2          temp_c = 0;
+  52   2          temp = 1;
+  53   2        }
+  54   1        
+C51 COMPILER V9.57.0.0   MAIN                                                              03/13/2022 16:43:59 PAGE 2   
+
+  55   1        if(ds_c++ >= 1)
+  56   1        {
+  57   2          ds_c = 0;
+  58   2          ds1 = 1;
+  59   2        }
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    133    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       5
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

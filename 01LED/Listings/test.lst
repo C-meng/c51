@@ -1,0 +1,51 @@
+C51 COMPILER V9.57.0.0   TEST                                                              03/10/2022 13:24:51 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE TEST
+OBJECT MODULE PLACED IN .\Objects\test.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE test.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\test
+                    -.lst) TABS(2) OBJECT(.\Objects\test.obj)
+
+line level    source
+
+   1          #include "test.h"
+   2          /*************************************************
+   3          函数功能：
+   4                  定义蜂鸣器继电器工作状态
+   5                  i = 0蜂鸣器关闭
+   6                  j = 0继电器关闭
+   7          *************************************************/
+   8          void Fuck_Init(bit i,bit j)
+   9          {
+  10   1        buzz = i;
+  11   1        realy = j;
+  12   1        P2 = Y5;
+  13   1        P2 = Yc;
+  14   1      }
+  15          
+  16          /*************************************************
+  17          函数功能：
+  18                  定义关于led的显示状态
+  19                  led为共阳极接法
+  20                  相应引脚输出0为点亮
+  21          *************************************************/
+  22          void Led_Init(u8 a)
+  23          {
+  24   1        P0 = a;
+  25   1        P2 = Y4;
+  26   1        P2 = Yc;
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     34    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

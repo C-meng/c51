@@ -1,0 +1,79 @@
+C51 COMPILER V9.55   KEY                                                                   03/22/2022 17:08:30 PAGE 1   
+
+
+C51 COMPILER V9.55, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.l
+                    -st) TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include "key.h"
+   2          
+   3          /*************************************************
+   4          函数功能：10ms延时
+   5          *************************************************/
+   6          void Delay10ms()    //@11.0592MHz
+   7          {
+   8   1        unsigned char i, j;
+   9   1      
+  10   1        i = 108;
+  11   1        j = 145;
+  12   1        do
+  13   1        {
+  14   2          while (--j);
+  15   2        } while (--i);
+  16   1      }
+  17          
+  18          
+  19          /*************************************************
+  20          函数功能：独立按键
+  21          *************************************************/
+  22          u8 Key_Init(void)
+  23          {
+  24   1        u8 key_num;
+  25   1        
+  26   1        //key_num = 0;
+  27   1        
+  28   1        S7 = 1;S6 = 1;S5 = 1;S4 = 1;
+  29   1        
+  30   1        if(S7 != 1){Delay10ms();if(S7 != 1){key_num = 7;while(S7 != 1);}}
+  31   1        if(S6 != 1){Delay10ms();if(S6 != 1){key_num = 6;while(S6 != 1);}}
+  32   1        if(S5 != 1){Delay10ms();if(S5 != 1){key_num = 5;while(S5 != 1);}}
+  33   1        if(S4 != 1){Delay10ms();if(S4 != 1){key_num = 4;while(S4 != 1);}}
+  34   1        
+  35   1        return key_num;
+  36   1      }
+  37          
+  38          u8 Key_Init(void)
+  39          {
+  40   1        u8 key_num;
+  41   1        
+  42   1        ha1 = 1;ha2 = 1;ha3 = 1;ha4 = 1;
+  43   1        li1 = 0;li2 = 0;li3 = 0;li4 = 0;
+  44   1        
+  45   1        if((ha1 != 1)||(ha2 != 1)||(ha3 != 1)||(ha4 != 1))
+  46   1        {
+  47   2          Delay10ms();
+  48   2          if(ha1 != 1)key_num = 7;
+  49   2          else if(ha2 != 1)key_num = 6;
+  50   2          else if(ha3 != 1)key_num = 5;
+  51   2          else if(ha4 != 1)key_num = 4;
+  52   2          
+  53   2          ha1 = 0;ha2 = 0;ha3 = 0;ha4 = 0;
+  54   2          li1 = 1;li2 = 1;li3 = 1;li4 = 1;
+C51 COMPILER V9.55   KEY                                                                   03/22/2022 17:08:30 PAGE 2   
+
+  55   2          
+  56   2          if(li1 != 1)key_num += 0;
+  57   2          else if(li2 != 1)key_num += 4;
+  58   2          else if(li3 != 1)key_num += 8;
+  59   2          else if(li4 != 1)key_num += 12;
+  60   2          
+  61   2          while((li1 != 1)||(li2 != 1)||(li3 != 1)||(li4 != 1));
+  62   2        }
+  63   1        return key_num;
+  64   1      }
+*** ERROR C237 IN LINE 64 OF key.c: 'Key_Init': function already has a body
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
